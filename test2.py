@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 N_A = 3003
 N_B = 2641
 
-nA = 330
+nA = 390
 nB = 297
 
 diff1=N_A-nA
@@ -33,7 +33,7 @@ obs_B = pm.Bernoulli("obs_B", p_B, value=observations_B, observed=True)
 
 # To be explained in chapter 3.
 mcmc = pm.MCMC([p_A, p_B, delta, obs_A, obs_B])
-mcmc.sample(20000, 1000)
+mcmc.sample(25000, 1000)
 
 p_A_samples = mcmc.trace("p_A")[:]
 p_B_samples = mcmc.trace("p_B")[:]
@@ -47,6 +47,9 @@ delta_samples = mcmc.trace("delta")[:]
 print("\n===================================================")
 print("In test A you had", N_A, "Visits with", nA, "conversions\n" )
 print("In test B you had", N_B, "Visits with", nB, "conversions\n" )
+print("Converstion rate A: ",nA/N_A,)
+print("\nConverstion rate A: ",nB/N_B,)
+print("Rate A - Rate B = ", nA/N_A - nB/N_B)
 print("\n===================================================")
 
 print("\n===================================================")
