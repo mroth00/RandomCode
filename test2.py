@@ -43,37 +43,37 @@ delta_samples = mcmc.trace("delta")[:]
 
 # Count the number of samples less than 0, i.e. the area under the curve
 # before 0, represent the probability that site A is worse than site B.
-print( "Probability site A is WORSE than site B: %.3f" % \
+print("\n===================================================")
+print( "\nProbability site A is WORSE than site B: %.3f" % \
     (delta_samples < 0).mean())
 
 print("Probability site A is BETTER than site B: %.3f" % \
     (delta_samples > 0).mean())
+print("\n===================================================")
 
+print("\n===================================================")
+print( "\nProbability site A is 1%% WORSE than site B: %.3f" % \
+    (delta_samples < -.01).mean())
 
+print("Probability site A is 1%% BETTER than site B: %.3f" % \
+    (delta_samples > .01).mean())
+print("\n===================================================")
+
+print("\n===================================================")
+print( "\nProbability site A is 2%% WORSE than site B: %.3f" % \
+    (delta_samples < -.02).mean())
+
+print("Probability site A is 2%% BETTER than site B: %.3f" % \
+    (delta_samples > .02).mean())
+print("\n===================================================")
 # histogram of posteriors
 
-ax = plt.subplot(311)
 
-plt.xlim(0, .1)
-plt.hist(p_A_samples, histtype='stepfilled', bins=25, alpha=0.85,
-         label="posterior of $p_A$", color="#A60628", normed=True)
-plt.vlines(true_p_A, 0, 80, linestyle="--", label="true $p_A$ (unknown)")
-plt.legend(loc="upper right")
-plt.title("Posterior distributions of $p_A$, $p_B$, and delta unknowns")
-
-ax = plt.subplot(312)
-
-plt.xlim(0, .1)
-plt.hist(p_B_samples, histtype='stepfilled', bins=25, alpha=0.85,
-         label="posterior of $p_B$", color="#467821", normed=True)
-plt.vlines(true_p_B, 0, 80, linestyle="--", label="true $p_B$ (unknown)")
-plt.legend(loc="upper right")
-
-ax = plt.subplot(313)
 plt.hist(delta_samples, histtype='stepfilled', bins=30, alpha=0.85,
          label="posterior of delta", color="#7A68A6", normed=True)
-plt.vlines(true_p_A - true_p_B, 0, 60, linestyle="--",
+plt.vlines(0, 0, 60, linestyle="--",
            label="true delta (unknown)")
 plt.vlines(0, 0, 60, color="black", alpha=0.2)
 plt.legend(loc="upper right")
 plt.show()
+
