@@ -3,20 +3,19 @@ from IPython.core.pylabtools import figsize
 import numpy as np
 from matplotlib import pyplot as plt
 
-# these two quantities are unknown to us.
-true_p_A = 0.05
-true_p_B = 0.04
 
 # notice the unequal sample sizes -- no problem in Bayesian analysis.
 N_A = 3003
 N_B = 2641
 
-observations_A = np.asarray(330*[1]+2673*[0])
-observations_B = np.asarray(297*[1]+2344*[0])
-print ("Obs from Site A: ", observations_A[:30].astype(int), "...")
-print( "Obs from Site B: ", observations_B[:30].astype(int), "...")
-print (observations_A.mean())
-print (observations_B.mean())
+nA = 330
+nB = 297
+
+diff1=N_A-nA
+diff2=N_B-nB
+
+observations_A = np.asarray(nA*[1]+diff1*[0])
+observations_B = np.asarray(nB*[1]+diff2*[0])
 
 # Set up the pymc model. Again assume Uniform priors for p_A and p_B.
 p_A = pm.Uniform("p_A", 0, 1)
@@ -43,6 +42,13 @@ delta_samples = mcmc.trace("delta")[:]
 
 # Count the number of samples less than 0, i.e. the area under the curve
 # before 0, represent the probability that site A is worse than site B.
+
+
+print("\n===================================================")
+print("In test A you had", N_A, "Visits with", nA, "conversions\n" )
+print("In test B you had", N_B, "Visits with", nB, "conversions\n" )
+print("\n===================================================")
+
 print("\n===================================================")
 print( "\nProbability site A is WORSE than site B: %.3f" % \
     (delta_samples < 0).mean())
@@ -71,8 +77,7 @@ print("\n===================================================")
 
 plt.hist(delta_samples, histtype='stepfilled', bins=30, alpha=0.85,
          label="posterior of delta", color="#7A68A6", normed=True)
-plt.vlines(0, 0, 60, linestyle="--",
-           label="true delta (unknown)")
+plt.vlines(0, 0, 60, linestyle="--")
 plt.vlines(0, 0, 60, color="black", alpha=0.2)
 plt.legend(loc="upper right")
 plt.show()
