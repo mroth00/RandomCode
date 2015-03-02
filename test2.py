@@ -11,7 +11,7 @@ def kinkos(N_A,nA,N_B,nB,delta_samples):
 	"\nIn test A you had", N_A, "Visits with", nA, "conversions",
 	"\nIn test B you had", N_B, "Visits with", nB, "conversions",
 	"\nConverstion rate A: ",nA/N_A,
-	"\nConverstion rate A: ",nB/N_B,
+	"\nConverstion rate B: ",nB/N_B,
 	"\nRate A - Rate B = ", nA/N_A - nB/N_B,
 	"\n===================================================")
     print("\n===================================================")
